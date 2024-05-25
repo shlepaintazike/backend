@@ -9,7 +9,7 @@ const pagesRouter = require('./routes/pages');
 const cors = require('./middlewars/cors');
 
 const app = express();
-const PORT = 3001;
+const PORT = 3000;
 
 connectToDatabase();
 
