@@ -16,7 +16,8 @@ const {
     checkIsGameExists,
     checkIfCategoriesAvaliable,
     checkEmptyFields,
-    checkIfUsersAreSafe } = require('../middlewars/games');
+    checkIfUsersAreSafe, 
+    checkIsVoteRequest} = require('../middlewars/games');
 
 const gamesRouter = require('express').Router();
 
@@ -40,6 +41,7 @@ gamesRouter.post(
 gamesRouter.put(
     '/games/:id',
     findGameById,
+    checkIsVoteRequest,
     checkIfUsersAreSafe,
     checkIfCategoriesAvaliable,
     checkEmptyFields,
