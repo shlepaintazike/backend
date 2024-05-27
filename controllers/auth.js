@@ -1,6 +1,7 @@
 const user = require('../models/user');
 const jwt = require('jsonwebtoken');
 const path = require('path');
+const cookies = require('cookie-parser')
 
 const login = (req, res) => {
     const { email, password } = req.body;
