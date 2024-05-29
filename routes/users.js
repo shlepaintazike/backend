@@ -1,50 +1,52 @@
-const {
-    sendUserCreated,
-    sendAllUsers,
-    sendUserUpdated,
-    sendUserDeleted,
-    sendUserById, 
-    sendMe} = require('../controllers/users');
-
-const { checkAuth } = require('../middlewars/auth');
-
-const {
-    findAllUsers,
-    createUser,
-    updateUser,
-    deleteUser,
-    findUserById,
-    checkEmptyNameAndEmailAndPassword,
-    checkEmptyNameAndEmail,
-    checkIsUserExists, 
-    hashPassword} = require('../middlewars/users');
-
-
 const usersRouter = require('express').Router();
 
 
-usersRouter.get('/users', findAllUsers, sendAllUsers);
-usersRouter.get('/users/:id', findUserById, sendUserById);
+const { findAllUsers,
+    createUser,
+    findUserById,
+    updateUser,
+    deleteUser,
+    checkEmptyNameAndEmailAndPassword,
+    checkEmptyNameAndEmail,
+    filterPassword,
+    checkIsUserExists,
+    hashPassword
+} = require('../middlewares/users');
+const { sendAllUsers,
+    sendUserCreated,
+    sendUserById,
+    sendUserUpdated,
+    sendUserDeleted,
+    sendMe
+} = require('../controllers/users');
 
+
+usersRouter.get('/', findAllUsers, filterPassword, sendAllUsers);
 
 usersRouter.post(
-    '/users',
-    findAllUsers,
-    checkIsUserExists,
-    checkEmptyNameAndEmailAndPassword,
-    checkAuth,
-    hashPassword,
-    createUser,
-    sendUserCreated);
+  "/",
+  findAllUsers,
+  checkIsUserExists,
+  checkEmptyNameAndEmailAndPassword,
+  hashPassword,
+  createUser,
+  sendUserCreated
+);
+usersRouter.get('/:id', findUserById, filterPassword, sendUserById);
 
 usersRouter.put(
-    '/users/:id',
-    checkEmptyNameAndEmail,
-    checkAuth,
-    updateUser,
-    sendUserUpdated);
+  "/:id",
+  checkEmptyNameAndEmail,
+  updateUser,
+  sendUserUpdated
+);
 
-usersRouter.delete('/users/:id', checkAuth, deleteUser, sendUserDeleted);
-usersRouter.get('/me', checkAuth, sendMe);
+usersRouter.delete(
+  "/:id",
+  deleteUser,
+  sendUserDeleted
+); 
+
+usersRouter.get("/me", sendMe); 
 
 module.exports = usersRouter;
