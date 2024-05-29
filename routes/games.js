@@ -27,6 +27,7 @@ gamesRouter.get(
     sendAllGames,
     findGameById,
     sendGameById);
+gamesRouter.get("/games/:id", findGameById, sendGameById);
 
 gamesRouter.post(
     '/games',
